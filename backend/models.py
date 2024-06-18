@@ -19,27 +19,21 @@ class Wallet(Base):
     transactions = relationship("Transaction", back_populates="wallet")
 
     @validates('balance')
-    def validate_balance(self, balance):
+    def validate_balance(self, key, balance):
         if balance < 0:
             raise ValueError("Wallet balance cannot be negative")
         return balance
-
-    class Meta:
-        ordering = ['label']
 
 
 class Transaction(Base):
     __tablename__ = 'transaction'
 
     id = Column(Integer, primary_key=True)
-    wallet_id = Column(Integer, ForeignKey('wallets.id'))
+    wallet_id = Column(Integer, ForeignKey('wallet.id'))
     txid = Column(String(255), unique=True)
     amount = Column(Numeric(36, 18))
 
     wallet = relationship("Wallet", back_populates="transactions")
-
-    class Meta:
-        ordering = ['wallet_id']
 
     def save(self):
         self.wallet.balance += self.amount

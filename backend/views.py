@@ -14,10 +14,7 @@ class WalletViewSet(viewsets.ModelViewSet):
         return session.query(Wallet).all()
 
     def perform_create(self, serializer):
-        new_wallet = Wallet(label=serializer.validated_data['label'], balance=serializer.validated_data['balance'])
-        session.add(new_wallet)
-        session.commit()
-        return new_wallet
+        serializer.save()
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
@@ -28,3 +25,6 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return session.query(Transaction).all()
+
+    def perform_create(self, serializer):
+        serializer.save()

@@ -15,6 +15,7 @@ services:
     build:
       context: ..
       dockerfile: build/wallet_api_backend/Dockerfile
+    restart: always
     volumes:
       - "../:/app/"
     env_file:

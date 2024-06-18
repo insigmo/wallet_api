@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -eux
-
+alembic revision --autogenerate
 alembic upgrade head
 
 
