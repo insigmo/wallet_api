@@ -1,0 +1,10 @@
+alembic==1.13.1
+cryptography==42.0.8
+environs==11.0.0
+django==5.0.6
+django-filter==24.2
+djangorestframework==3.15.1
+djangorestframework-jsonapi==7.0.1
+pymysql==1.1.1
+sqlalchemy==2.0.30
+supervisor==4.2.5
