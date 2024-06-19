@@ -26,7 +26,8 @@ The API allows for creating, managing, and querying wallet data efficiently.
 
 1. **Run the application:**
    ```bash
-   docker-compose up -d web
+   cd build/
+   docker compose up -d web
    ```
 
 2. **Access the API:**
@@ -55,5 +56,13 @@ The API allows for creating, managing, and querying wallet data efficiently.
 
 To run the tests, use the following command:
 ```bash
+   cd build/
    docker compose up -d web_tests
+```
+
+## Run linter
+
+To run linter ruff, use the following command:
+```bash
+   ruff check 
 ```
