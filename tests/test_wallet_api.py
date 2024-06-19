@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 import pytest
 from requests import HTTPError
 
@@ -13,11 +15,11 @@ def test_wallet(http_client, fake_data):
         }
     }
     response = http_client.post('/wallet/', json=expected)
-    assert response.status_code == 201
+    assert response.status_code == HTTPStatus.CREATED
     assert response.json()["data"]['attributes'] == expected["data"]['attributes']
 
     response = http_client.get('/wallet/')
-    assert response.status_code == 200
+    assert response.status_code == HTTPStatus.OK
     assert response.json()["data"][-1]['attributes'] == expected["data"]['attributes']
 
 

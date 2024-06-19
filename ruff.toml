@@ -1,0 +1,31 @@
+line-length = 120
+
+[lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "PL"
+]
+
+ignore = [
+    "W291",
+]
+
+[lint.pylint]
+max-nested-blocks = 10
+max-args = 5
+max-bool-expr = 8
+max-branches = 12
+max-locals = 15
+max-public-methods = 30
+max-returns = 10
+max-statements = 50
+
+[lint.per-file-ignores]
+# ignores from .flake8
+"source/tools/settings_updater/python/settings_updater/source/settings_updater/__init__.py" = ["F403"]
+"source/docker/docker_utils/python/docker_utils/source/docker_utils/__init__.py" = [
+    "E402",
+    "F402",
+]

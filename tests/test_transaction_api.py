@@ -1,4 +1,5 @@
 import random
+from http import HTTPStatus
 
 import pytest
 from requests import HTTPError
@@ -31,10 +32,10 @@ def test_transaction(http_client, fake_data):
         }
     }
     response = http_client.post('/transaction/', json=body)
-    assert response.status_code == 201
+    assert response.status_code == HTTPStatus.CREATED
 
     response = http_client.get('/transaction/', json=body)
-    assert response.status_code == 200
+    assert response.status_code == HTTPStatus.OK
 
     for transaction in response.json()['data']:
         if transaction['attributes']['wallet_id'] == str(wallet_id):
