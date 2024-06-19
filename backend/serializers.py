@@ -1,3 +1,6 @@
+import hashlib
+import json
+
 from rest_framework_json_api import serializers
 from backend.models import Wallet, Transaction, session
 
@@ -34,17 +37,13 @@ class TransactionSerializer(serializers.Serializer):
     class Meta:
         model = Transaction
         fields = ['id', 'txid', 'amount', 'wallet_id']
-        resource_name = 'transactions'
+        resource_name = 'transaction'
 
     def create(self, validated_data):
-        transaction = Transaction(**validated_data)
-        session.add(transaction)
-        session.commit()
+        wallet_id = validated_data.pop('wallet_id')
+        wallet = session.query(Wallet).get(wallet_id)
+        if not wallet:
+            raise serializers.ValidationError("Wallet not found")
+        transaction = Transaction(wallet=wallet, **validated_data)
+        transaction.save()
         return transaction
-
-    def update(self, instance, validated_data):
-        instance.txid = validated_data.get('txid', instance.txid)
-        instance.amount = validated_data.get('amount', instance.amount)
-        instance.wallet_id = validated_data.get('wallet_id', instance.wallet_id)
-        session.commit()
-        return instance

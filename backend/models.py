@@ -16,7 +16,7 @@ class Wallet(Base):
     label = Column(String(255))
     balance = Column(Integer, default=0)
 
-    transactions = relationship("Transaction", back_populates="wallet")
+    transaction = relationship("Transaction", back_populates="wallet")
 
     @validates('balance')
     def validate_balance(self, key, balance):
@@ -33,7 +33,7 @@ class Transaction(Base):
     txid = Column(String(255), unique=True)
     amount = Column(Numeric(36, 18))
 
-    wallet = relationship("Wallet", back_populates="transactions")
+    wallet = relationship("Wallet", back_populates="transaction")
 
     def save(self):
         self.wallet.balance += self.amount

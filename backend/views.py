@@ -1,7 +1,7 @@
-from rest_framework import viewsets
+from rest_framework import filters, viewsets
+
 from backend.models import Wallet, Transaction, session
 from backend.serializers import WalletSerializer, TransactionSerializer
-from rest_framework import filters
 
 
 class WalletViewSet(viewsets.ModelViewSet):
