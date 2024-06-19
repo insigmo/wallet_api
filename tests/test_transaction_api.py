@@ -57,49 +57,47 @@ def test_transaction(http_client, fake_data):
 
 
 @pytest.mark.parametrize("body", [
-    # negative balance wallet
+    # invalid wallet id
     {
         "data": {
-            "type": "wallet",
+            "type": "transaction",
             "attributes": {
-                "label": "invalid",
-                "balance": -100
+                "wallet_id": "",
+                "amount": 100
+            }
+        }
+    },
+    {
+        "data": {
+            "type": "transaction",
+            "attributes": {
+                "wallet_id": "m",
+                "amount": 100
             }
         }
     },
 
-    # invalid data no balance wallet
     {
         "data": {
-            "type": "wallet",
+            "type": "transaction",
             "attributes": {
-                "label": "invalid",
-                "balance": -100
+                "wallet_id": 123,
+                "amount": 100
             }
         }
     },
 
-    # invalid data no label wallet
+    # invalid type
     {
         "data": {
-            "type": "wallet",
+            "type": "transactions",
             "attributes": {
-                "balance": -100
-            }
-        }
-    },
-
-    # invalid data type wallets, not wallet
-    {
-        "data": {
-            "type": "wallets",
-            "attributes": {
-                "label": "invalid",
-                "balance": -100
+                "wallet_id": "123",
+                "amount": 100
             }
         }
     },
 ])
 def test_negative_wallet(http_client, body):
     with pytest.raises(HTTPError):
-        http_client.post('/wallet/', json=body)
+        http_client.post('/transaction/', json=body)

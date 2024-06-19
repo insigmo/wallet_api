@@ -35,7 +35,15 @@ def run_migrations_offline() -> None:
         context.run_migrations()
 
 
-def run_migrations_online() -> None:
+def process_revision_directives(context, revision, directives):
+    if config.cmd_opts.autogenerate:
+        script = directives[0]
+        if script.upgrade_ops.is_empty():
+            directives[:] = []
+            print('No changes in schema detected.')
+
+
+def run_migrations_online():
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
@@ -44,7 +52,10 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata, compare_server_default=True
+            connection=connection,
+            target_metadata=target_metadata,
+            process_revision_directives=process_revision_directives,
+            compare_server_default=True
         )
 
         with context.begin_transaction():

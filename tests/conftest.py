@@ -1,14 +1,11 @@
+import pytest
 from faker import Faker
 
-from tests.utils.logger import configure_logging
-
-import pytest
-
-from tests.utils.http_client import HttpClient
-
+from utils.http_client import HttpClient
+from utils.logger import configure_logging
 
 configure_logging()
-BASE_URL = 'http://localhost:8000/api/'
+BASE_URL = 'http://web:8000/api/'
 
 
 @pytest.fixture(scope="session")

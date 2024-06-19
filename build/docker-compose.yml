@@ -25,3 +25,15 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  web_tests:
+    build:
+      context: ..
+      dockerfile: build/wallet_api_backend_tests/Dockerfile
+    environment:
+      - PYTHONPATH=/tests
+    depends_on:
+      - web
+    command: pytest /tests
+    volumes:
+      - "../tests/:/tests/"
