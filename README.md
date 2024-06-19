@@ -45,12 +45,12 @@ The API allows for creating, managing, and querying wallet data efficiently.
 
 ### Wallet Operations
 
-- **List Wallet:** `GET /wallets/`
-- **Create Wallet:** `POST /wallets/`
+- **List Wallet:** `GET /wallet/`
+- **Create Wallet:** `POST /wallet/`
 
 ### Transaction History
-- **List Transactions:** `GET /transactions/`
-- **Create Transaction:** `POST /transactions/`
+- **List Transactions:** `GET /transaction/`
+- **Create Transaction:** `POST /transaction/`
 
 ## Running Tests
 
