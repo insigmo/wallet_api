@@ -1,7 +1,7 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Numeric
+from django.conf import settings
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Numeric, Index
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker, validates
-from django.conf import settings
 
 Base = declarative_base()
 
@@ -17,6 +17,9 @@ class Wallet(Base):
     balance = Column(Integer, default=0)
 
     transaction = relationship("Transaction", back_populates="wallet")
+    __table_args__ = (
+        Index('idx_wallet_label', 'label'),
+    )
 
     @validates('balance')
     def validate_balance(self, key, balance):
@@ -34,6 +37,10 @@ class Transaction(Base):
     amount = Column(Numeric(36, 18))
 
     wallet = relationship("Wallet", back_populates="transaction")
+
+    __table_args__ = (
+        Index('idx_transaction_wallet_id', 'txid'),
+    )
 
     def save(self):
         self.wallet.balance += self.amount
