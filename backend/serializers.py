@@ -1,7 +1,8 @@
 import hashlib
-import json
+import random
 
 from rest_framework_json_api import serializers
+
 from backend.models import Wallet, Transaction, session
 
 
@@ -30,7 +31,6 @@ class WalletSerializer(serializers.Serializer):
 
 class TransactionSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    txid = serializers.CharField(max_length=255)
     amount = serializers.DecimalField(max_digits=36, decimal_places=18)
     wallet_id = serializers.IntegerField()
 
@@ -44,6 +44,7 @@ class TransactionSerializer(serializers.Serializer):
         wallet = session.query(Wallet).get(wallet_id)
         if not wallet:
             raise serializers.ValidationError("Wallet not found")
+        validated_data["txid"] = hashlib.sha256(random.randbytes(10)).hexdigest()
         transaction = Transaction(wallet=wallet, **validated_data)
         transaction.save()
         return transaction
