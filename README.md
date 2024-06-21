@@ -24,13 +24,19 @@ The API allows for creating, managing, and querying wallet data efficiently.
 
 ## Usage
 
-1. **Run the application:**
+1. **Create env file**
    ```bash
    cd build/
+   cp template.env .env
+   # change data in .env
+   ```
+
+2. **Run the application:**
+   ```bash
    docker compose up -d web
    ```
 
-2. **Access the API:**
+3. **Access the API:**
    The API will be available at `http://localhost:8000`. Use tools like Postman or cURL to interact with the endpoints.
 
 ## Directory Structure
@@ -56,7 +62,6 @@ The API allows for creating, managing, and querying wallet data efficiently.
 
 To run the tests, use the following command:
 ```bash
-   cd build/
    docker compose up -d web_tests
 ```
 
